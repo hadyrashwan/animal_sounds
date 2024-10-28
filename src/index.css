@@ -15,6 +15,7 @@ body {
 .animal-card {
   @apply bg-white rounded-lg shadow-lg p-4 m-4;
   @apply transition-transform transform hover:scale-105;
+  @apply cursor-pointer;
 }
 
 .animal-image {
