@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const animals = [
-  { name: 'Dog', image: 'dog.jpg', sound: 'dog.mp3' },
+  { name: 'Dog', image: 'dog.webp', sound: 'dog.mp3' },
   { name: 'Cat', image: 'cat.jpg', sound: 'cat.mp3' },
   // Add more animals as needed
 ];
