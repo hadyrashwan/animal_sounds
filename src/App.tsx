@@ -39,11 +39,21 @@ const App: React.FC = () => {
     audio.play();
   };
 
+  const sortedAnimals = [...animals].sort((a, b) => {
+    if (pinnedAnimals.includes(a.name) && !pinnedAnimals.includes(b.name)) {
+      return -1;
+    }
+    if (!pinnedAnimals.includes(a.name) && pinnedAnimals.includes(b.name)) {
+      return 1;
+    }
+    return 0;
+  });
+
   return (
     <div className="min-h-screen flex flex-col items-center">
       <h1 className="header">Animal Sounds App</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {animals.map((animal) => (
+        {sortedAnimals.map((animal) => (
           <div
             key={animal.name}
             className="animal-card"
