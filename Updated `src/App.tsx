@@ -34,17 +34,29 @@ const App: React.FC = () => {
     );
   };
 
+  const playSound = (sound: string) => {
+    const audio = new Audio(sound);
+    audio.play();
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center">
       <h1 className="header">Animal Sounds App</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {animals.map((animal) => (
-          <div key={animal.name} className="animal-card">
+          <div
+            key={animal.name}
+            className="animal-card"
+            onClick={() => playSound(animal.sound)}
+          >
             <img src={animal.image} alt={animal.name} className="animal-image" />
             <h2 className="animal-name">{animal.name}</h2>
             <button
               className={`pin-button ${pinnedAnimals.includes(animal.name) ? 'pinned' : ''}`}
-              onClick={() => togglePin(animal.name)}
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePin(animal.name);
+              }}
             >
               {pinnedAnimals.includes(animal.name) ? 'Unpin' : 'Pin'}
             </button>
