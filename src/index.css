@@ -3,23 +3,33 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f0f8ff;
-  color: #333;
+  @apply bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400;
+  @apply text-center;
+  @apply font-sans;
 }
 
-h1 {
-  color: #4a90e2;
+.header {
+  @apply text-4xl font-bold text-white mb-8;
 }
 
-img {
-  transition: transform 0.2s;
+.animal-card {
+  @apply bg-white rounded-lg shadow-lg p-4 m-4;
+  @apply transition-transform transform hover:scale-105;
 }
 
-img:hover {
-  transform: scale(1.1);
+.animal-image {
+  @apply w-32 h-32 mx-auto mb-4 rounded-full;
 }
 
-button {
-  cursor: pointer;
+.animal-name {
+  @apply text-xl font-semibold text-purple-700;
+}
+
+.pin-button {
+  @apply bg-yellow-400 text-white px-4 py-2 rounded-full;
+  @apply transition-transform transform hover:scale-110;
+}
+
+.pinned {
+  @apply bg-green-500;
 }

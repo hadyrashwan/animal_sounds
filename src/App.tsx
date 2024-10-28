@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
 
-const animals = [
-  { name: 'Dog', image: 'dog.webp', sound: 'dog.mp3' },
-  { name: 'Cat', image: 'cat.jpg', sound: 'cat.mp3' },
-  // Add more animals as needed
+interface Animal {
+  name: string;
+  image: string;
+  sound: string;
+  pinned: boolean;
+}
+
+const animals: Animal[] = [
+  { name: 'Dog', image: '/images/dog.webp', sound: '/sounds/dog.mp3', pinned: false },
+  { name: 'Cat', image: '/images/cat.webp', sound: '/sounds/cat.mp3', pinned: false },
 ];
 
 const App: React.FC = () => {
   const [pinnedAnimals, setPinnedAnimals] = useState<string[]>([]);
 
   useEffect(() => {
-    const savedPinnedAnimals = localStorage.getItem('pinnedAnimals');
-    if (savedPinnedAnimals) {
-      setPinnedAnimals(JSON.parse(savedPinnedAnimals));
+    const storedPinnedAnimals = localStorage.getItem('pinnedAnimals');
+    if (storedPinnedAnimals) {
+      setPinnedAnimals(JSON.parse(storedPinnedAnimals));
     }
   }, []);
 
@@ -20,39 +26,27 @@ const App: React.FC = () => {
     localStorage.setItem('pinnedAnimals', JSON.stringify(pinnedAnimals));
   }, [pinnedAnimals]);
 
-  const playSound = (sound: string) => {
-    const audio = new Audio(`/sounds/${sound}`);
-    audio.play();
-  };
-
-  const togglePin = (animalName: string) => {
+  const togglePin = (name: string) => {
     setPinnedAnimals((prevPinnedAnimals) =>
-      prevPinnedAnimals.includes(animalName)
-        ? prevPinnedAnimals.filter((name) => name !== animalName)
-        : [...prevPinnedAnimals, animalName]
+      prevPinnedAnimals.includes(name)
+        ? prevPinnedAnimals.filter((animal) => animal !== name)
+        : [...prevPinnedAnimals, name]
     );
   };
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <h1 className="text-3xl font-bold mb-4">Animal Sounds</h1>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {animals.map((animal, index) => (
-          <div key={index} className="relative">
-            <img
-              src={`/images/${animal.image}`}
-              alt={animal.name}
-              className="w-32 h-32 cursor-pointer rounded-full border-4 border-transparent hover:border-blue-500"
-              onClick={() => playSound(animal.sound)}
-            />
-            <p className="text-center mt-2">{animal.name}</p>
+    <div className="min-h-screen flex flex-col items-center">
+      <h1 className="header">Animal Sounds App</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {animals.map((animal) => (
+          <div key={animal.name} className="animal-card">
+            <img src={animal.image} alt={animal.name} className="animal-image" />
+            <h2 className="animal-name">{animal.name}</h2>
             <button
-              className={`absolute top-0 right-0 p-1 rounded-full ${
-                pinnedAnimals.includes(animal.name) ? 'bg-red-500' : 'bg-gray-300'
-              }`}
+              className={`pin-button ${pinnedAnimals.includes(animal.name) ? 'pinned' : ''}`}
               onClick={() => togglePin(animal.name)}
             >
-              {pinnedAnimals.includes(animal.name) ? '📌' : '📍'}
+              {pinnedAnimals.includes(animal.name) ? 'Unpin' : 'Pin'}
             </button>
           </div>
         ))}
