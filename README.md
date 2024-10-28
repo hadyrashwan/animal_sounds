@@ -6,7 +6,7 @@ An app for animal sounds built with Vite and React.
 
 ### Prerequisites
 
-- Node.js and npm installed on your machine.
+- bun and npm installed on your machine.
 
 ### Installation
 
@@ -22,14 +22,14 @@ An app for animal sounds built with Vite and React.
 
 3. Install dependencies:
    ```sh
-   npm install
+   bun install
    ```
 
 ### Usage
 
 1. Start the development server:
    ```sh
-   npm run dev
+   bun run dev
    ```
 
 2. Open your browser and navigate to `http://localhost:3000` to see the app in action.
@@ -37,3 +37,6 @@ An app for animal sounds built with Vite and React.
 ### Build
 
 To build the app for production:
+   ```sh
+   bun run build
+   ```
