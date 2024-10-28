@@ -1,6 +1,7 @@
 # Animal Sounds App ( AI created)
 
 An app for animal sounds built with Vite and React.
+The App is created by Aider and Mistral AI Large.
 
 ## Getting Started
 
