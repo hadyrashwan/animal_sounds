@@ -12,21 +12,21 @@ const initialAnimals: Animal[] = [
   { name: 'Cat', image: '/images/cat.webp', sound: '/sounds/cat.mp3', pinned: false },
 ];
 
-const App: React.FC = () => {
-  const [animals, setAnimals] = useState<Animal[]>(initialAnimals);
+// Get initial state from localStorage or use default
+const getInitialState = () => {
+  const storedPinnedAnimals = localStorage.getItem('pinnedAnimals');
+  if (storedPinnedAnimals) {
+    const pinnedAnimals = JSON.parse(storedPinnedAnimals);
+    return initialAnimals.map((animal) => ({
+      ...animal,
+      pinned: pinnedAnimals.includes(animal.name),
+    }));
+  }
+  return initialAnimals;
+};
 
-  useEffect(() => {
-    const storedPinnedAnimals = localStorage.getItem('pinnedAnimals');
-    if (storedPinnedAnimals) {
-      const pinnedAnimals = JSON.parse(storedPinnedAnimals);
-      setAnimals((prevAnimals) =>
-        prevAnimals.map((animal) => ({
-          ...animal,
-          pinned: pinnedAnimals.includes(animal.name),
-        }))
-      );
-    }
-  }, []);
+const App: React.FC = () => {
+  const [animals, setAnimals] = useState<Animal[]>(getInitialState());
 
   useEffect(() => {
     const pinnedAnimals = animals.filter((animal) => animal.pinned).map((animal) => animal.name);
