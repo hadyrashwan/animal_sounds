@@ -10,6 +10,10 @@ interface Animal {
 const initialAnimals: Animal[] = [
   { name: 'Dog', image: '/images/dog.webp', sound: '/sounds/dog.mp3', pinned: false },
   { name: 'Cat', image: '/images/cat.webp', sound: '/sounds/cat.mp3', pinned: false },
+  { name: 'Lion', image: '/images/lion.webp', sound: '/sounds/lion.mp3', pinned: false },
+  { name: 'Elephant', image: '/images/elephant.webp', sound: '/sounds/elephant.mp3', pinned: false },
+  { name: 'Tiger', image: '/images/tigger.webp', sound: '/sounds/tiger.mp3', pinned: false },
+
 ];
 
 // Get initial state from localStorage or use default
