@@ -1,4 +1,4 @@
-# Animal Sounds App
+# Animal Sounds App ( AI created)
 
 An app for animal sounds built with Vite and React.
 
@@ -32,7 +32,7 @@ An app for animal sounds built with Vite and React.
    bun run dev
    ```
 
-2. Open your browser and navigate to `http://localhost:3000` to see the app in action.
+2. Open your browser and navigate to `http://localhost:5173/` to see the app in action.
 
 ### Build
 
