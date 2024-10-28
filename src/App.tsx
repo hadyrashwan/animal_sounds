@@ -7,30 +7,37 @@ interface Animal {
   pinned: boolean;
 }
 
-const animals: Animal[] = [
+const initialAnimals: Animal[] = [
   { name: 'Dog', image: '/images/dog.webp', sound: '/sounds/dog.mp3', pinned: false },
   { name: 'Cat', image: '/images/cat.webp', sound: '/sounds/cat.mp3', pinned: false },
 ];
 
 const App: React.FC = () => {
-  const [pinnedAnimals, setPinnedAnimals] = useState<string[]>([]);
+  const [animals, setAnimals] = useState<Animal[]>(initialAnimals);
 
   useEffect(() => {
     const storedPinnedAnimals = localStorage.getItem('pinnedAnimals');
     if (storedPinnedAnimals) {
-      setPinnedAnimals(JSON.parse(storedPinnedAnimals));
+      const pinnedAnimals = JSON.parse(storedPinnedAnimals);
+      setAnimals((prevAnimals) =>
+        prevAnimals.map((animal) => ({
+          ...animal,
+          pinned: pinnedAnimals.includes(animal.name),
+        }))
+      );
     }
   }, []);
 
   useEffect(() => {
+    const pinnedAnimals = animals.filter((animal) => animal.pinned).map((animal) => animal.name);
     localStorage.setItem('pinnedAnimals', JSON.stringify(pinnedAnimals));
-  }, [pinnedAnimals]);
+  }, [animals]);
 
   const togglePin = (name: string) => {
-    setPinnedAnimals((prevPinnedAnimals) =>
-      prevPinnedAnimals.includes(name)
-        ? prevPinnedAnimals.filter((animal) => animal !== name)
-        : [...prevPinnedAnimals, name]
+    setAnimals((prevAnimals) =>
+      prevAnimals.map((animal) =>
+        animal.name === name ? { ...animal, pinned: !animal.pinned } : animal
+      )
     );
   };
 
@@ -40,10 +47,10 @@ const App: React.FC = () => {
   };
 
   const sortedAnimals = [...animals].sort((a, b) => {
-    if (pinnedAnimals.includes(a.name) && !pinnedAnimals.includes(b.name)) {
+    if (a.pinned && !b.pinned) {
       return -1;
     }
-    if (!pinnedAnimals.includes(a.name) && pinnedAnimals.includes(b.name)) {
+    if (!a.pinned && b.pinned) {
       return 1;
     }
     return 0;
@@ -62,13 +69,13 @@ const App: React.FC = () => {
             <img src={animal.image} alt={animal.name} className="animal-image" />
             <h2 className="animal-name">{animal.name}</h2>
             <button
-              className={`pin-button ${pinnedAnimals.includes(animal.name) ? 'pinned' : ''}`}
+              className={`pin-button ${animal.pinned ? 'pinned' : ''}`}
               onClick={(e) => {
                 e.stopPropagation();
                 togglePin(animal.name);
               }}
             >
-              {pinnedAnimals.includes(animal.name) ? 'Unpin' : 'Pin'}
+              {animal.pinned ? 'Unpin' : 'Pin'}
             </button>
           </div>
         ))}
